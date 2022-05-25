@@ -1,45 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
-    <style>
-      div{
-        margin-top: 50px;
-        margin-left: 550px;
-      }
-      #products{
-        display: grid;
-        grid-template-columns: auto;
-        gap: 20px;
-        width: 300px;
-      }
-    </style>
-  </head>
+ <html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>Home</title>
+     <style>
+       * {
+         padding: 0;
+         margin: 0;
+       }
+       form {
+         margin-top: 70px;
+         margin-left: auto;
+         width: 20%;
+         margin-right: auto;
+         margin-top: 100px;
+       }
+       input,
+       select {
+         font-size: 20px;
+         padding: 5px 20px;
+         margin-right: 3px;
+       }
+       nav {
+         margin: auto;
+         padding: 10px;
+         display: flex;
+         width: 30%;
+         justify-content: space-around;
+         background-color: rgb(213, 37, 21);
+       }
+       a {
+         text-decoration: none;
+         color: white;
+       }
+       body {
+         margin-top: 20px;
+       }
+     </style>
+   </head>
+   <body>
+     <nav>
+       <h1><a href="index.html">Home</a></h1>
+       <!-- <h1><a href="dashboard.html">dashboard</a></h1> -->
+     </nav>
+     <form id="form">
+       <input type="text" id="name" placeholder="name" /><br /><br />
+       <!-- <label for="course">Choose your course:</label> -->
 
-  <body>
-    <div id="navbar">
-      <!--Create Show Products button here, give id as "show_products". avoid making spelling mistakes in HTML id's-->
-    <a href="inventory.html"><button id="show_products">Show Products</button></a>
-    </div>
-    <div>
-      
-      <h2>Add Products</h2>
-      <!--Create a form here to accept product data from user, give form HTML id as "products"-->
-      <form id="products" onsubmit="inputData">
-      <!--Create four inputs to accept Type, Description, price, & image-->
-        <!--give the inputs following respective id's, "type", "desc", "price","image"-->
-        <input type="text" id="type" placeholder="Type">
-        <input type="text" id="desc" placeholder="Description">
-        <input type="number" id="price" placeholder="Price">
-        <input type="url" id="image" placeholder="Images">
-        <!--create a "Add Product" button to submit form, give it html id as "add_product"-->
-        <input type="submit" value="Add Product" id="add_product">
-      </form>
-    </div>
-  </body>
-</html>
+       <select id="course">
+         <option value="Full_Stack_Web_devlopment">FSD</option>
+         <option value="android_development">Android development</option></select
+       ><br /><br />
 
-<script src="./scripts/index.js"></script>
+       <select name="unit" id="unit">
+         <opton value="1">unit 1</opton>
+         <option value="2">unit 2</option>
+         <option value="3">unit 3</option>
+         <option value="4">unit 4</option>
+         <option value="5">unit 5</option>
+         <option value="6">unit 6</option></select
+       ><br /><br />
+
+       <input type="text" placeholder="image" id="image" /><br /><br />
+
+       <select name="batch" id="batch">
+         <option value="batch2">batch2</option>
+         <option value="batch1">batch1</option>
+         <!-- <option value="web16">web 16</option> --></select
+       ><br /><br />
+
+       <input type="submit" />
+     </form>
+   </body>
+ </html>
+ <script>
+   let name = document.querySelector("#name");
+   let course = document.querySelector("#course");
+   let unit = document.querySelector("#unit");
+   let image = document.querySelector("#image");
+   let batch = document.querySelector("#batch");
+
+   let f1 = document.querySelector("#form");
+   f1.addEventListener("submit", myfunc);
+
+   let studentarr = JSON.parse(localStorage.getItem("mstudent")) || [];
+
+   function myfunc() {
+     event.preventDefault();
+     let studentData = {
+       sname: form.name.value,
+       scourse: form.course.value,
+       sunit: form.unit.value,
+       simage: form.image.value,
+       sbatch: form.batch.value,
+     };
+     console.log(studentData);
+     studentarr.push(studentData);
+
+     localStorage.setItem("mstudent", JSON.stringify(studentarr));
+     window.location.href = "dashboard.html";
+   }
+ </script>

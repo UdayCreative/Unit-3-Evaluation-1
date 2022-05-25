@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+ <html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>Document</title>
+     <style>
+       * {
+         margin: 0;
+         padding: 0;
+       }
+       th,
+       td {
+         border: 2px solid rgb(6, 85, 6);
+         background-color: rgb(67, 9, 154);
+         color: white;
+         padding: 10px 30px;
+         font-size: 20px;
+         font-weight: lighter;
+         font-family: sans-serif;
+       }
+       #photo {
+         padding: 0;
+       }
+       img {
+         width: 100%;
+       }
+       nav {
+         padding: 10px;
+         display: flex;
+         width: 98%;
+         justify-content: space-between;
+         background-color: rgb(29, 23, 7);
+       }
+       #batches {
+         display: flex;
+         width: 50%;
+         color: rgb(12, 245, 144);
+
+         justify-content: space-around;
+       }
+       a {
+         text-decoration: none;
+         color: rgb(12, 245, 144);
+       }
+     </style>
+   </head>
+   <body>
+     <nav>
+       <h1><a href="index.html">Home</a></h1>
+       <div id="batches">
+         <h1 id="b1">batch1</h1>
+         <h1>|</h1>
+         <h1 id="b2">batch2</h1>
+       </div>
+     </nav>
+     <main>
+       <table>
+         <thead>
+           <tr>
+             <th>image</th>
+             <th>name</th>
+             <th>course</th>
+             <th>unit</th>
+             <th>batch</th>
+             <th>remove</th>
+           </tr>
+         </thead>
+         <tbody>
+         </tbody>
+       </table>
+     </main>
+   </body>
+ </html>
+ <script>
+   var stdarray = JSON.parse(localStorage.getItem("mstudent")) || [];
+   console.log(stdarray);
+   displayData(stdarray);
+
+   function displayData(data) {
+     let count1 = 0;
+     let count2 = 0;
+     data.forEach(function (element, index) {
+       var tr = document.createElement("tr");
+
+       var td1 = document.createElement("td");
+       td1.setAttribute("id", "photo");
+       var image = document.createElement("img");
+       image.setAttribute("src", element.simage);
+       td1.append(image);
+
+       var name = document.createElement("td");
+       name.innerText = element.sname;
+
+       var course = document.createElement("td");
+       course.innerText = element.scourse;
+
+       var unit = document.createElement("td");
+       unit.innerText = element.sunit;
+
+       var batch = document.createElement("td");
+       batch.innerText = element.sbatch;
+       if (element.sbatch == "batch1") {
+         count1++;
+       } else if (element.sbatch == "batch2") {
+         count2++;
+       }
+       var b1 = (document.querySelector("#b1").innerText = `batch 1:${count1}`);
+       var b2 = (document.querySelector("#b2").innerText = `batch 2:${count2}`);
+
+       var btn = document.createElement("td");
+       btn.innerText = "remove";
+       btn.style.color = "red";
+       btn.addEventListener("click", function (element, index) {
+         deletingfunc(element, index);
+       });
+
+       tr.append(td1, name, course, unit, batch, btn);
+       document.querySelector("tbody").append(tr);
+
+       console.log(tr);
+     });
+     var trash = JSON.parse(localStorage.getItem("trasheditem")) || [];
+
+     function deletingfunc(element, index) {
+       var box = stdarray.splice(index, 1);
+       console.log(box);
+       trash.push(box);
+       localStorage.setItem("trasheditem", JSON.stringify(trash));
+
+       localStorage.setItem("mstudent", JSON.stringify(stdarray));
+       window.location.reload();
+     }
+   }
+ </script>
